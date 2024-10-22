@@ -1,5 +1,7 @@
-const API_URL = ' https://api.thecatapi.com/v1/images/search?limit=10';
-
+const API_URL = `https://api.thecatapi.com/v1/images/search?limit=10&api_key= ${
+	import.meta.env.API_KEY
+}`;
+// ${}
 // fetch(URL)
 // 		.then((res) => res.json())
 // 		.then((data) => {
