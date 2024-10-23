@@ -8,68 +8,34 @@
 	</head>
 	<body>
 		<h1>Gatitos App</h1>
+		<span id="errorM"></span>
 		<section id="randomGatitos">
 			<h2>Gatitos Aleatorios</h2>
 
 			<article>
 				<img id="img1" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
+				<button id="btn1" onclick="saveFavoriteGatito()">
+					Guardar Gatito en Favoritos
+				</button>
 			</article>
 
 			<article>
 				<img id="img2" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
+				<button id="btn2" onclick="saveFavoriteGatito()">
+					Guardar Gatito en Favoritos
+				</button>
 			</article>
 
-			<article>
-				<img id="img3" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-			<article>
-				<img id="img4" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img5" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img6" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img7" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img8" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img9" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<article>
-				<img id="img10" width="150px" alt="Foto Gatito" />
-				<button>Guardar Gatito en Favoritos</button>
-			</article>
-
-			<button onclick="reload()">Recargar</button>
+			<button onclick="loadRandomGatitos()">Recargar</button>
 		</section>
 
-		<section id="favoritesGatitos">
+		<section id="favoriteGatitos">
 			<h2>Gatitos Favoritos</h2>
 
 			<img id="img1" width="150px" alt="Foto Gatito" />
 			<button>Sacar al gatito de favoritos</button>
 		</section>
 
-		<script type="module" src="./main.js"></script>
+		<script src="./main.js"></script>
 	</body>
 </html>

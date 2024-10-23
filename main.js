@@ -1,41 +1,76 @@
-const API_URL = `https://api.thecatapi.com/v1/images/search?limit=10&api_key= ${
-	import.meta.env.API_KEY
-}`;
-// ${}
-// fetch(URL)
-// 		.then((res) => res.json())
-// 		.then((data) => {
-// 			const img = document.querySelector('img');
-// 			img.src = data[0].url;
-// 			console.log(data);
-// 		});
+const API_URL_RANDOM =
+	'https://api.thecatapi.com/v1/images/search?limit=2&api_key=live_OixKTUrsYplf60tg9pJBWxjq3Qm9TXfiubVVOOnkJHF8UkuxCWHQP20bFnLre537';
+const API_URL_FAVORITES =
+	'https://api.thecatapi.com/v1/favourites?api_key=live_OixKTUrsYplf60tg9pJBWxjq3Qm9TXfiubVVOOnkJHF8UkuxCWHQP20bFnLre537';
 
-async function reload() {
-	const res = await fetch(API_URL);
+const spanError = document.getElementById('error');
+
+async function loadRandomGatitos() {
+	const res = await fetch(API_URL_RANDOM);
 	const data = await res.json();
-	console.log('🚀  data:', data);
+	console.log('Random');
+	console.log(data);
 
-	const img1 = document.getElementById('img1');
-	const img2 = document.getElementById('img2');
-	const img3 = document.getElementById('img3');
-	const img4 = document.getElementById('img4');
-	const img5 = document.getElementById('img5');
-	const img6 = document.getElementById('img6');
-	const img7 = document.getElementById('img7');
-	const img8 = document.getElementById('img8');
-	const img9 = document.getElementById('img9');
-	const img10 = document.getElementById('img10');
+	if (res.status !== 200) {
+		spanError.innerHTML = 'Hubo un error: ' + res.status;
+	} else {
+		const img1 = document.getElementById('img1');
+		const img2 = document.getElementById('img2');
+		const btn1 = document.getElementById('btn1');
+		const btn2 = document.getElementById('btn2');
+		img1.src = data[0].url;
+		img2.src = data[1].url;
 
-	img1.src = data[0].url;
-	img2.src = data[1].url;
-	img3.src = data[2].url;
-	img4.src = data[3].url;
-	img5.src = data[4].url;
-	img6.src = data[5].url;
-	img7.src = data[6].url;
-	img8.src = data[7].url;
-	img9.src = data[8].url;
-	img10.src = data[9].url;
+		btn1.onclick = () => saveFavouriteGatito(data[0].id);
+		btn2.onclick = () => saveFavouriteGatito(data[1].id);
+	}
 }
 
-reload();
+async function loadFavouriteGatitos() {
+	const res = await fetch(API_URL_FAVORITES);
+	const data = await res.json();
+	console.log('Favoritos');
+	console.log(data);
+
+	if (res.status !== 200) {
+		spanError.innerHTML = 'Hubo un error: ' + res.status + data.message;
+	} else {
+		data.forEach((Gatito) => {
+			const section = document.getElementById('favoriteGatitos');
+			const article = document.createElement('article');
+			const img = document.createElement('img');
+			const btn = document.createElement('button');
+			const btnText = document.createTextNode('Sacar al Gatito de favoritos');
+
+			img.src = Gatito.image.url;
+			img.width = 150;
+			btn.appendChild(btnText);
+			article.appendChild(img);
+			article.appendChild(btn);
+			section.appendChild(article);
+		});
+	}
+}
+
+async function saveFavouriteGatito(id) {
+	const res = await fetch(API_URL_FAVORITES, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			image_id: id,
+		}),
+	});
+	const data = await res.json();
+
+	console.log('Save');
+	console.log(res);
+
+	if (res.status !== 200) {
+		spanError.innerHTML = 'Hubo un error: ' + res.status + data.message;
+	}
+}
+
+loadRandomGatitos();
+loadFavouriteGatitos();
