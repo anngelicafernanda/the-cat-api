@@ -5,6 +5,8 @@ const API_URL_FAVORITES =
 const API_URL_DELETE = (id) =>
 	`https://api.thecatapi.com/v1/favourites/${id}?api_key=live_OixKTUrsYplf60tg9pJBWxjq3Qm9TXfiubVVOOnkJHF8UkuxCWHQP20bFnLre537`;
 
+const API_URL_UPLOAD = 'https://api.thecatapi.com/v1/images/upload';
+
 const spanError = document.getElementById('error');
 
 async function loadRandomGatitos() {
@@ -66,7 +68,7 @@ async function saveFavouriteGatito(id) {
 	const res = await fetch(API_URL_FAVORITES, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'text/plane',
+			'Content-Type': 'application/json',
 			'X-API-KEY':
 				'live_OixKTUrsYplf60tg9pJBWxjq3Qm9TXfiubVVOOnkJHF8UkuxCWHQP20bFnLre537',
 		},
@@ -101,6 +103,35 @@ async function deleteFavoriteGatito(id) {
 	} else {
 		console.log('Michi eliminado de favoritos');
 		loadFavouriteGatitos();
+	}
+}
+
+async function uploadGatitoPhotho() {
+	const form = document.getElementById('uploadingForm');
+	const formData = new FormData(form);
+
+	console.log(formData.get('file'));
+
+	const res = await fetch(API_URL_UPLOAD, {
+		method: 'POST',
+		headers: {
+			'X-API-KEY':
+				'live_OixKTUrsYplf60tg9pJBWxjq3Qm9TXfiubVVOOnkJHF8UkuxCWHQP20bFnLre537',
+		},
+		body: formData,
+	});
+	const data = await res.json();
+	console.log('🚀  data:', data);
+	console.log('🚀  res.status:', res.status);
+
+	if (res.status !== 201) {
+		spanError.innerHTML = 'Hubo un error: ' + res.status + data.message;
+		console.log({ data });
+	} else {
+		console.log('Foto gatito subida');
+		console.log(data);
+		console.log(data.url);
+		saveFavouriteGatito(data.id);
 	}
 }
 
